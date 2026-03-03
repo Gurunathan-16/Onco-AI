@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Onco AI - Medical Diagnostic System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+
+body {
+    background: #f4f8fb;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Navbar */
+.navbar-medical {
+    background: #0d3b66;
+    padding: 15px 40px;
+}
+
+.navbar-medical .navbar-brand,
+.navbar-medical a {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+/* Card */
+.medical-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 35px;
+    margin-top: 50px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+/* Button */
+.predict-btn {
+    background: #0d3b66;
+    color: white;
+    border-radius: 12px;
+    padding: 12px;
+    border: none;
+    width: 100%;
+    transition: 0.3s;
+}
+
+.predict-btn:hover {
+    background: #092c4c;
+}
+
+/* Result Styling */
+.result-success {
+    background: #e6f4ea;
+    color: #155724;
+    border-left: 6px solid #28a745;
+}
+
+.result-danger {
+    background: #fdecea;
+    color: #842029;
+    border-left: 6px solid #dc3545;
+}
+
+.result-box {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+/* Preview */
+.preview-box {
+    background: #e9f2f9;
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+}
+
+.preview-box img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+/* Spinner */
+#loadingSpinner {
+    display: none;
+    text-align: center;
+    margin-top: 15px;
+}
+
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-medical d-flex justify-content-between">
+    <span class="navbar-brand">🧠 Onco AI</span>
+    <div>
+        <a href="/analytics">Analytics</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-md-8">
+
+<div class="medical-card">
+
+<h4 class="mb-4 text-center text-primary">
+<i class="bi bi-heart-pulse"></i> Early Cancer Detection System
+</h4>
+
+<form id="predictForm" method="POST" enctype="multipart/form-data">
+
+<div class="mb-3">
+<label class="form-label">Upload Medical Image</label>
+<input type="file" class="form-control" name="file" required>
+<!-- ✅ Supported Images Note -->
+    <div style="background-color: #f8f9fa; padding: 12px; border-radius: 6px; margin-top: 10px;">
+        <strong style="color:#6c757d;">⚠ Supported Images:</strong>
+        <ul style="margin: 5px 0 5px 18px; color:#6c757d;">
+            <li><b>Breast Cancer:</b> Histopathology microscopic images</li>
+            <li><b>Oral Cancer:</b> Clinical oral cavity lesion images</li>
+        </ul>
+        <small style="color:#6c757d;">
+            Please upload clear JPG or PNG medical images only.
+        </small>
+    </div>
+</div>
+
+<div class="mb-3">
+<label class="form-label">Select Model</label>
+<select class="form-select" name="model">
+<option value="breast">Breast Cancer</option>
+<option value="oral">Oral Cancer</option>
+</select>
+</div>
+
+<button type="submit" class="predict-btn" id="predictBtn">
+<i class="bi bi-cpu"></i> Run AI Diagnosis
+</button>
+
+</form>
+
+<div id="loadingSpinner">
+<div class="spinner-border text-primary" role="status"></div>
+<p class="mt-2 text-muted">Analyzing image using CNN model...</p>
+</div>
+
+{% if result %}
+<div class="result-box 
+{% if result == 'Cancer' or result == 'Malignant' %}
+result-danger
+{% else %}
+result-success
+{% endif %}
+">
+
+<i class="bi bi-activity"></i>
+Prediction: {{ result }} <br>
+Confidence: {{ confidence }}%
+
+</div>
+{% endif %}
+
+{% if image %}
+<div class="preview-box mt-4">
+<h6 class="text-muted">Uploaded Image</h6>
+<img src="{{ url_for('static', filename='uploads/' + image) }}">
+</div>
+{% endif %}
+
+</div>
+</div>
+</div>
+</div>
+
+<script>
+const form = document.getElementById("predictForm");
+const spinner = document.getElementById("loadingSpinner");
+const button = document.getElementById("predictBtn");
+
+form.addEventListener("submit", function() {
+    spinner.style.display = "block";
+    button.disabled = true;
+    button.innerText = "Processing...";
+});
+</script>
+
+</body>
+</html>
