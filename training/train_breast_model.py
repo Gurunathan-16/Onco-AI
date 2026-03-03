@@ -8,8 +8,8 @@ from tensorflow.keras import layers, models
 # 🔹 ABSOLUTE PATHS (UPDATE IF NEEDED)
 # -------------------------------------------------
 
-DATASET_PATH = r"D:\breast & oral\dataset\breast_cancer"
-MODEL_SAVE_PATH = r"D:/breast & oral/models/breast_model.h5"
+DATASET_PATH = r"D:\onco-ai\dataset\breast_cancer"
+MODEL_SAVE_PATH = r"D:\onco-ai\models\breast_model.h5"
 
 # Create models folder if not exists
 os.makedirs(os.path.dirname(MODEL_SAVE_PATH), exist_ok=True)

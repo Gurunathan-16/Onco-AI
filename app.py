@@ -44,10 +44,10 @@ create_admin()
 # 🔹 LOAD MODELS
 # ==============================
 
-breast_model = load_model(r"D:\breast & oral\models\breast_model.h5")
-oral_model = load_model(r"D:\breast & oral\models\oral_model.h5")
+breast_model = load_model(r"D:\onco-ai\models\breast_model.h5")
+oral_model = load_model(r"D:\onco-ai\models\oral_model.h5")
 
-UPLOAD_FOLDER = r"D:\breast & oral\static\uploads"
+UPLOAD_FOLDER = r"D:\onco-ai\static\uploads"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
@@ -190,4 +190,4 @@ def logout():
 # ==============================
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
