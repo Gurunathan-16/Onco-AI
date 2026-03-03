@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 import os
 import sqlite3
+import gdown
 from tensorflow.keras.models import load_model
 from preprocess import preprocess_image
 from database import init_db, save_prediction
@@ -44,10 +45,35 @@ create_admin()
 # 🔹 LOAD MODELS
 # ==============================
 
-breast_model = load_model(r"D:\onco-ai\models\breast_model.h5")
-oral_model = load_model(r"D:\onco-ai\models\oral_model.h5")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_DIR = os.path.join(BASE_DIR, "models")
 
-UPLOAD_FOLDER = r"D:\onco-ai\static\uploads"
+if not os.path.exists(MODEL_DIR):
+    os.makedirs(MODEL_DIR)
+
+breast_model_path = os.path.join(MODEL_DIR, "breast_model.h5")
+oral_model_path = os.path.join(MODEL_DIR, "oral_model.h5")
+
+# Download breast model
+if not os.path.exists(breast_model_path):
+    gdown.download(
+        "https://drive.google.com/file/d/1PPTCIcVk80BI5BUVFPu-CTRtHqZMaTEw",
+        breast_model_path,
+        quiet=False
+    )
+
+# Download oral model
+if not os.path.exists(oral_model_path):
+    gdown.download(
+        "https://drive.google.com/file/d/1rtx67lPduD6u-2B8FpYAgtcJ5CfE8fIr",
+        oral_model_path,
+        quiet=False
+    )
+
+breast_model = load_model(breast_model_path)
+oral_model = load_model(oral_model_path)
+
+UPLOAD_FOLDER = os.path.join(BASE_DIR, "static", "uploads")
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
