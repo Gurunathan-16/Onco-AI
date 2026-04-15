@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Prediction Result</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h4>Cancer Type: {{ cancer_type }}</h4>
+        <h3 class="text-{{ 'danger' if 'Cancer' in prediction else 'success' }}">
+            {{ prediction }}
+        </h3>
+        <p><strong>Confidence:</strong> {{ confidence }}%</p>
+        
+        <div class="mt-4">
+            <img src="{{ image_url }}" class="img-fluid rounded" style="max-height: 400px;" alt="Uploaded Image">
+        </div>
+    </div>
+</div>
+
+<a href="{{ url_for('predict') }}" class="btn btn-secondary mt-3">Make Another Prediction</a>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Make a New Prediction</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label class="form-label">Select Cancer Type</label>
+        <select name="cancer_type" class="form-select">
+            <option value="breast">Breast Cancer (Ultrasound)</option>
+            <option value="oral">Oral Cancer (Clinical Photo)</option>
+        </select>
+    </div>
+    
+    <div class="mb-3">
+        <label class="form-label">Upload Image</label>
+        <input type="file" name="image" class="form-control" accept="image/*" required>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Predict</button>
+</form>
+{% endblock %}
