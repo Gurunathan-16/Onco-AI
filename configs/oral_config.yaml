@@ -1,0 +1,7 @@
+model_name: densenet121          # Good performer for oral images (or try 'inceptionv3')
+num_classes: 2
+image_size: 224                  # 224 for DenseNet, 299 for InceptionV3
+batch_size: 32
+epochs: 5
+learning_rate: 0.0001
+cancer_type: oral

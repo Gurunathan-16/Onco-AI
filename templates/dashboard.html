@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 class="mb-4">Analytics Dashboard</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5>Total Predictions</h5>
+                <h2 class="text-primary">{{ total_predictions }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4 class="mt-5">Recent Predictions</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Cancer Type</th>
+            <th>Prediction</th>
+            <th>Confidence</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pred in predictions %}
+        <tr>
+            <td>{{ pred.timestamp.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>{{ pred.cancer_type }}</td>
+            <td><strong>{{ pred.prediction }}</strong></td>
+            <td>{{ pred.confidence|round(2) }}%</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

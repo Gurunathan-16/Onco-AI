@@ -1,0 +1,7 @@
+model_name: inceptionv3          # Options: inceptionv3, densenet121, efficientnetb3
+num_classes: 2
+image_size: 299                  # 299 for InceptionV3, 224 for others
+batch_size: 32
+epochs: 5
+learning_rate: 0.0001
+cancer_type: breast
